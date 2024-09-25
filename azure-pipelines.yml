@@ -16,11 +16,6 @@ steps:
     ng build --configuration production
   displayName: 'npm install and build'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: 'dist'
-    ArtifactName: 'dist'
-
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: 'dist' # Assuming 'dist' is your build output folder
@@ -29,15 +24,14 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/dist.zip' # Define the path for the zip file
     replaceExistingArchive: true
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.ArtifactStagingDirectory)'
-    Contents: '**/*.zip' # Assuming you want to copy all zip files
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'
+- script: |
+    echo "Contents of Artifact Staging Directory:"
+    ls -al $(Build.ArtifactStagingDirectory)
+  displayName: 'List files in Artifact Staging Directory'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/drop'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
 
 - task: AzureRmWebAppDeployment@4
@@ -46,5 +40,5 @@ steps:
     azureSubscription: 'Sample'
     appType: 'webAppLinux'
     WebAppName: 'Sample-testingForDeployment'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/dist.zip'
     RuntimeStack: 'NODE|18-lts'
