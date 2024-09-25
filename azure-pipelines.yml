@@ -40,5 +40,5 @@ steps:
     azureSubscription: 'Sample'
     appType: 'webAppLinux'
     WebAppName: 'Sample-testingForDeployment'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/dist.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/dist.zip'
     RuntimeStack: 'NODE|18-lts'
