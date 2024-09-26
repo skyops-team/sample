@@ -20,7 +20,7 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: 'dist'
+    rootFolderOrFile: 'dist/sample2/browser'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/dist/sample2/browser.zip' 
