@@ -21,7 +21,7 @@ steps:
     rootFolderOrFile: 'dist'
     includeRootFolder: false
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/dist.zip' 
+    archiveFile: '$(Build.ArtifactStagingDirectory)/dist/sample2.zip' 
     replaceExistingArchive: true
 
 - script: |
@@ -40,5 +40,5 @@ steps:
     azureSubscription: 'Sample'
     appType: 'webAppLinux'
     WebAppName: 'Sample-testingForDeployment'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/dist.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/dist/sample2.zip'
     RuntimeStack: 'NODE|20-lts'
