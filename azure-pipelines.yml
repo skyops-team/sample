@@ -18,10 +18,10 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: 'dist' # Assuming 'dist' is your build output folder
+    rootFolderOrFile: 'dist'
     includeRootFolder: false
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/dist.zip' # Define the path for the zip file
+    archiveFile: '$(Build.ArtifactStagingDirectory)/dist.zip' 
     replaceExistingArchive: true
 
 - script: |
@@ -41,4 +41,4 @@ steps:
     appType: 'webAppLinux'
     WebAppName: 'Sample-testingForDeployment'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/dist.zip'
-    RuntimeStack: 'NODE|18-lts'
+    RuntimeStack: 'NODE|20-lts'
