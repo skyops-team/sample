@@ -39,6 +39,6 @@ steps:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Sample'
     appType: 'webAppLinux'
-    WebAppName: 'Sample-testingForDeployment'
+    WebAppName: 'SkyOps'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/dist/sample2/browser.zip'
     RuntimeStack: 'NODE|20-lts'
