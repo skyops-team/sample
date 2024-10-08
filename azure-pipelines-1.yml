@@ -1,0 +1,44 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install -g @angular/cli
+    npm install
+    ng build --configuration production
+  displayName: 'npm install and build'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'dist/sample2/browser'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/dist/sample2/browser.zip' 
+    replaceExistingArchive: true
+
+- script: |
+    echo "Contents of Artifact Staging Directory:"
+    ls -al $(Build.ArtifactStagingDirectory)
+  displayName: 'List files in Artifact Staging Directory'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Sample'
+    appType: 'webAppLinux'
+    WebAppName: 'SkyOps'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/dist/sample2/browser.zip'
+    RuntimeStack: 'NODE|20-lts'
